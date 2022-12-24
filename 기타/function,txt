@@ -1,0 +1,20 @@
+# loading video gfg
+clip = VideoFileClip("file.file")
+ 
+# getting only first 5 seconds
+clip = clip.subclip(0, 5)
+
+# showing  clip  / releaset video file clip
+clip.ipython_display(width = 360) 
+clip.close()
+
+# getting start time of the clip
+value = clip.start
+# getting end time of the clip
+value = clip.end
+
+# Reduce the audio volume (volume x 0.8) 
+clip = clip.volumex(0.8)
+
+# setting position of the clip2
+clip2 = clip2.set_position((100, 100))
