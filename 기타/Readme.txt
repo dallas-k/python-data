@@ -2,9 +2,16 @@
 2. pip install ez_setup
 3. imagemagick 설치
 4. moviepy/config_defaults.py 에서 ff & imagemagick 경로 변경
+5. bat파일로 일부 자동화
 
 
-// 현재 계획 : json 파일로 원문 작성 -> 이를 바탕으로 TTS, img 생성 -> 두 개 하나로 합치기 (즉, 싱크로율 및 duration 중요)
+// 현재 계획 :
+1. json 파일로 원문 작성
+2. img 개별 이미지 시퀀시 생성 (-> 나중에 PDF 만들어서 Script 만들 수 있게) & 개별 audio 생성
+3. img sequence별 화면 + 오디오 생성
+4. sequence 합쳐서 하나의 영상으로 만들기
+
+
 // img : text length -> set duration -> color clip -> text clip -> img sequence
 // 주요 기능
 - overlay text to img/color panel
