@@ -1,6 +1,3 @@
-import audioread
-import math
-  
 # function to convert the information into 
 # some readable format
 def audiolength(length):

@@ -1,33 +1,34 @@
 from moviepy.editor import *
+import audioread
+import math
 import mod.audioLength as audiolen
 
 clips = []
 
-# 경로
-img_path = './database/img/img{0}.png'.format(data)
-korAudio_path = './database/kor{0}.mp3'.format(data)
-engAudio_path = './database/eng{0}.mp3'.format(data)
+for x in range(0,2) :
+    # Path
+    img_path = './database/img/img{0}.png'.format(x)
+    korAudio_path = './database/kor{0}.mp3'.format(x)
+    engAudio_path = './database/eng{0}.mp3'.format(x)
 
-# concat, save
-duration = 4
-picture = ImageClip(img_path, duration=duration)
-print(picture)
-eng_audio = AudioFileClip(engAudio_path)
-kor_audio = AudioFileClip(korAudio_path)
-main_audio = CompositeAudioClip([eng_audio, kor_audio])
-picture.set_audio(main_audio)
-picture.write_videofile('trial{0}.mp4'.format(data), fps=24)
+    # Audio Set
+    eng_audio = AudioFileClip(engAudio_path)
+    kor_audio = AudioFileClip(korAudio_path)
 
+    # Audio Length
+    with audioread.audio_open(engAudio_path) as eng:
+        eng_len = math.ceil(eng.duration)
+    with audioread.audio_open(korAudio_path) as kor:
+        kor_len = math.ceil(kor.duration)
+    total_len = eng_len + kor_len
 
-# clip1 = ImageClip('1.png').set_duration(3)
+    clip1 = ImageClip(img_path).set_duration(eng_len)
+    clip1 = clip1.set_audio(eng_audio)
+    clip2 = ImageClip(img_path).set_duration(kor_len)
+    clip2 = clip1.set_audio(kor_audio)
 
-# count = 3
-# temp = ImageClip('./database/img/img{0}.png'.format(count))
-# clips.append(temp)
-# print(clips)
+    clips.append(clip1)
+    clips.append(clip2)
 
-
-# for i in range(20) :
-#     temp = ImageClip('./database/img/img{0}.png'.format(i))
-#     if(temp) :
-#         clips.append(temp)
+video_clip = concatenate_videoclips(clips, method='compose')
+video_clip.write_videofile('translator.mp4', fps=24, remove_temp = True, codec="libx264", audio_codec="aac")
